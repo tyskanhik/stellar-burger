@@ -40,4 +40,5 @@ export const ingredientSlice = createSlice({
 });
 
 export default ingredientSlice.reducer;
-export const selectorIngredients = ingredientSlice.selectors;
+export const { selectorIngredientsData, selectorIngredientsStatus } =
+  ingredientSlice.selectors;
