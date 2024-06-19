@@ -9,7 +9,7 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus, TUser } from '@utils-types';
-import { deleteCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 interface UserState {
   iaAuthCheck: boolean;
@@ -35,6 +35,8 @@ export const userLogin = createAsyncThunk(
   'user/login',
   async (user: TLoginData) => {
     const data = await loginUserApi(user);
+    setCookie('accessToken', data.accessToken);
+    localStorage.setItem('refreshToken', data.refreshToken);
     return data.user;
   }
 );
@@ -52,11 +54,15 @@ export const updateUser = createAsyncThunk(
   }
 );
 export const logoutUser = createAsyncThunk('auth/logout', (_, { dispatch }) => {
-  logoutApi().then(() => {
-    localStorage.removeItem('refreshToken');
-    deleteCookie('accessToken');
-    dispatch(logoutUser());
-  });
+  logoutApi()
+    .then(() => {
+      localStorage.removeItem('refreshToken');
+      deleteCookie('accessToken');
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      dispatch(logoutUser());
+    });
 });
 
 export const userSlice = createSlice({
@@ -110,6 +116,17 @@ export const userSlice = createSlice({
       state.data = action.payload;
     });
     builder.addCase(updateUser.rejected, (state) => {
+      state.requestStatus = RequestStatus.Failed;
+    });
+    ////
+    builder.addCase(logoutUser.pending, (state) => {
+      state.requestStatus = RequestStatus.Loading;
+    });
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      state.requestStatus = RequestStatus.Success;
+      state.data = null;
+    });
+    builder.addCase(logoutUser.rejected, (state) => {
       state.requestStatus = RequestStatus.Failed;
     });
   },
