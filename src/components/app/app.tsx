@@ -18,16 +18,18 @@ import { ProtectedRoute } from '../protected-route';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/ingredients';
+import { checkUserAuth, userActions } from '../../services/slices/user';
 
 const App = () => {
   const location = useLocation();
   const background = location.state?.background;
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispath(getIngredients());
-  }, [dispath]);
+    dispatch(getIngredients());
+    dispatch(checkUserAuth()).finally(() => dispatch(userActions.authCheck()));
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>
@@ -38,7 +40,7 @@ const App = () => {
         <Route
           path='/login'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Login />
             </ProtectedRoute>
           }
@@ -46,7 +48,7 @@ const App = () => {
         <Route
           path='/register'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Register />
             </ProtectedRoute>
           }
@@ -54,7 +56,7 @@ const App = () => {
         <Route
           path='/forgot-password'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ForgotPassword />
             </ProtectedRoute>
           }
@@ -62,7 +64,7 @@ const App = () => {
         <Route
           path='/reset-password'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <ResetPassword />
             </ProtectedRoute>
           }
@@ -98,7 +100,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Номер заказа' onClose={() => navigate(-1)}>
+              <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
                 <IngredientDetails />
               </Modal>
             }
