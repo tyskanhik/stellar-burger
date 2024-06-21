@@ -29,14 +29,17 @@ export const BurgerConstructor: FC = () => {
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
-    const bunId = constructorItems.bun._id;
-    const ingredientsId = constructorItems.ingredients.map(
-      (ingredient) => ingredient._id
-    );
-    const order = [bunId].concat(ingredientsId);
-    dispatch(submitOrder(order));
 
-    !user ? navigate('/login') : console.log('оформить заказ');
+    if (!user) {
+      navigate('/login');
+    } else {
+      const bunId = constructorItems.bun._id;
+      const ingredientsId = constructorItems.ingredients.map(
+        (ingredient) => ingredient._id
+      );
+      const order = [bunId].concat(ingredientsId);
+      dispatch(submitOrder(order));
+    }
   };
   const closeOrderModal = () => {
     dispatch(clearOrder());
