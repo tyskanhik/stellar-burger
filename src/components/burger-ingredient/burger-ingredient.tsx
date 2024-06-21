@@ -10,10 +10,9 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
   ({ ingredient, count }) => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const uuid = self.crypto.randomUUID();
 
     const handleAdd = () => {
-      const id: string = uuid;
+      const id: string = self.crypto.randomUUID();
       const ingredientPipe = { ...ingredient, id };
       dispatch(addToBurgerConstructor(ingredientPipe));
     };

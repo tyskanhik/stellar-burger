@@ -24,6 +24,31 @@ export const burgerConstructorSlice = createSlice({
       } else {
         state.ingredients = [...state.ingredients, action.payload];
       }
+    },
+    swapIngredient: (
+      state,
+      action: PayloadAction<{ index: number; direction: string }>
+    ) => {
+      const { index, direction } = action.payload;
+      if (direction === 'up') {
+        state.ingredients.splice(
+          index - 1,
+          2,
+          state.ingredients[index],
+          state.ingredients[index - 1]
+        );
+      }
+      if (direction === 'down') {
+        state.ingredients.splice(
+          index,
+          2,
+          state.ingredients[index + 1],
+          state.ingredients[index]
+        );
+      }
+    },
+    deliteIngredient: (state, action: PayloadAction<number, string>) => {
+      state.ingredients.splice(action.payload, 1);
     }
   },
   extraReducers: (builder) => {},
@@ -32,6 +57,7 @@ export const burgerConstructorSlice = createSlice({
   }
 });
 
-export const { addToBurgerConstructor } = burgerConstructorSlice.actions;
+export const { addToBurgerConstructor, swapIngredient, deliteIngredient } =
+  burgerConstructorSlice.actions;
 export const { selectorConstructorData } = burgerConstructorSlice.selectors;
 export default burgerConstructorSlice.reducer;
