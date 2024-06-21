@@ -49,6 +49,10 @@ export const burgerConstructorSlice = createSlice({
     },
     deliteIngredient: (state, action: PayloadAction<number, string>) => {
       state.ingredients.splice(action.payload, 1);
+    },
+    clearStateBurgerConstructor: (state) => {
+      state.bun = null;
+      state.ingredients = [];
     }
   },
   extraReducers: (builder) => {},
@@ -57,7 +61,11 @@ export const burgerConstructorSlice = createSlice({
   }
 });
 
-export const { addToBurgerConstructor, swapIngredient, deliteIngredient } =
-  burgerConstructorSlice.actions;
+export const {
+  addToBurgerConstructor,
+  swapIngredient,
+  deliteIngredient,
+  clearStateBurgerConstructor
+} = burgerConstructorSlice.actions;
 export const { selectorConstructorData } = burgerConstructorSlice.selectors;
 export default burgerConstructorSlice.reducer;

@@ -85,6 +85,10 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path='/feed/:number'
+          element={<ProtectedRoute children={<OrderInfo />} />}
+        />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
       {background && (
