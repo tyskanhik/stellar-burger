@@ -7,7 +7,6 @@ import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
 
 export const IngredientDetails: FC = () => {
-  /** TODO: взять переменную из стора */
   const ingredients = useSelector((state: RootState) => state.ingredients.data);
   const params = useParams();
 
