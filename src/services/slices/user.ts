@@ -59,10 +59,7 @@ export const logoutUser = createAsyncThunk('auth/logout', (_, { dispatch }) => {
       localStorage.removeItem('refreshToken');
       deleteCookie('accessToken');
     })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      dispatch(logoutUser());
-    });
+    .catch((err) => console.log(err));
 });
 
 export const userSlice = createSlice({

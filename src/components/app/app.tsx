@@ -89,6 +89,10 @@ const App = () => {
           path='/feed/:number'
           element={<ProtectedRoute children={<OrderInfo />} />}
         />
+        <Route
+          path='/profile/orders/:number'
+          element={<ProtectedRoute children={<OrderInfo />} />}
+        />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
       {background && (
@@ -112,10 +116,7 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal
-                title='Номер заказа'
-                onClose={() => console.log('OnClose')}
-              >
+              <Modal title='Номер заказа' onClose={() => navigate(-1)}>
                 <OrderInfo />
               </Modal>
             }
