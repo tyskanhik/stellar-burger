@@ -3,6 +3,7 @@ import { LoginUI } from '@ui-pages';
 import { useDispatch } from '../../services/store';
 import { userLogin } from '../../services/slices/user';
 
+// TODO: реализовать через хук useForm. ошибка с типом setEmail и setPassword
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

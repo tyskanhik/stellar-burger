@@ -11,21 +11,20 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
-import { RootState, useDispatch, useSelector } from '../../services/store';
 import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/ingredients';
 import { checkUserAuth, userActions } from '../../services/slices/user';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
 
 const App = () => {
   const location = useLocation();
   const background = location.state?.background;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const order = useSelector((store: RootState) => store.order);
+  const order = useAppSelector((store) => store.order);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -93,6 +92,10 @@ const App = () => {
         <Route
           path='/profile/orders/:number'
           element={<ProtectedRoute children={<OrderInfo />} />}
+        />
+        <Route
+          path='/ingredients/:id'
+          element={<ProtectedRoute children={<IngredientDetails />} />}
         />
         <Route path='*' element={<NotFound404 />} />
       </Routes>

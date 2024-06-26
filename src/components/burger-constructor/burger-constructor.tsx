@@ -1,8 +1,6 @@
 import { FC, useMemo } from 'react';
 import { RequestStatus, TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from 'react-redux';
-import { RootState, useDispatch } from '../../services/store';
 import { selectorUserData } from '../../services/slices/user';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -12,20 +10,19 @@ import {
   submitOrder
 } from '../../services/slices/order';
 import { clearStateBurgerConstructor } from '../../services/slices/burgerConstructor';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
 
 export const BurgerConstructor: FC = () => {
-  const constructorItems = useSelector(
-    (store: RootState) => store.burgerConstructor
-  );
+  const constructorItems = useAppSelector((store) => store.burgerConstructor);
 
-  const user = useSelector(selectorUserData);
+  const user = useAppSelector(selectorUserData);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const orderRequest =
-    useSelector(selectorOrderStatus) === RequestStatus.Loading;
+    useAppSelector(selectorOrderStatus) === RequestStatus.Loading;
 
-  const orderModalData = useSelector(selectorOrderData);
+  const orderModalData = useAppSelector(selectorOrderData);
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;

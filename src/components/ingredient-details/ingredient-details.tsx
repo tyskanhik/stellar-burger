@@ -1,13 +1,12 @@
 import { FC } from 'react';
 import { Preloader } from '../ui/preloader';
 import { IngredientDetailsUI } from '../ui/ingredient-details';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
 import { TIngredient } from '@utils-types';
 import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../services/hooks/hooks';
 
 export const IngredientDetails: FC = () => {
-  const ingredients = useSelector((state: RootState) => state.ingredients.data);
+  const ingredients = useAppSelector((state) => state.ingredients.data);
   const params = useParams();
 
   const ingredientData = ingredients?.find(
