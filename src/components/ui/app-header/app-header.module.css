@@ -21,6 +21,7 @@
 }
 
 .link_active {
+  text-decoration: none;
   color: var(--text-primary-color);
 }
 
@@ -34,4 +35,8 @@
   display: flex;
   align-items: center;
   margin: 0 auto;
+}
+
+.qwe {
+  text-decoration: none;
 }

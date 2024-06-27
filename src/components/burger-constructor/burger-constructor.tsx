@@ -1,24 +1,47 @@
 import { FC, useMemo } from 'react';
-import { TConstructorIngredient } from '@utils-types';
+import { RequestStatus, TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import { selectorUserData } from '../../services/slices/user';
+import { useNavigate } from 'react-router-dom';
+import {
+  clearOrder,
+  selectorOrderData,
+  selectorOrderStatus,
+  submitOrder
+} from '../../services/slices/order';
+import { clearStateBurgerConstructor } from '../../services/slices/burgerConstructor';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/hooks';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
-  const constructorItems = {
-    bun: {
-      price: 0
-    },
-    ingredients: []
-  };
+  const constructorItems = useAppSelector((store) => store.burgerConstructor);
 
-  const orderRequest = false;
+  const user = useAppSelector(selectorUserData);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const orderModalData = null;
+  const orderRequest =
+    useAppSelector(selectorOrderStatus) === RequestStatus.Loading;
+
+  const orderModalData = useAppSelector(selectorOrderData);
 
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
+
+    if (!user) {
+      navigate('/login');
+    } else {
+      const bunId = constructorItems.bun._id;
+      const ingredientsId = constructorItems.ingredients.map(
+        (ingredient) => ingredient._id
+      );
+      const order = [bunId].concat(ingredientsId);
+      dispatch(submitOrder(order));
+    }
   };
-  const closeOrderModal = () => {};
+  const closeOrderModal = () => {
+    dispatch(clearOrder());
+    dispatch(clearStateBurgerConstructor());
+  };
 
   const price = useMemo(
     () =>
@@ -29,8 +52,6 @@ export const BurgerConstructor: FC = () => {
       ),
     [constructorItems]
   );
-
-  return null;
 
   return (
     <BurgerConstructorUI
