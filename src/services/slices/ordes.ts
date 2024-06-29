@@ -2,12 +2,12 @@ import { getOrdersApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus, TOrder } from '@utils-types';
 
-interface OrdesState {
+export interface OrdesState {
   data: TOrder[];
   requestStatus: RequestStatus;
 }
 
-const initialState: OrdesState = {
+export const initialState: OrdesState = {
   data: [],
   requestStatus: RequestStatus.Idle
 };
