@@ -22,6 +22,7 @@ describe('Тест slice feed', () => {
     const state = feedSlice(initialState, getFeed.pending(''));
     expect(state.statys).toBe(RequestStatus.Loading);
   });
+
   it('Статус Success и запись в state', () => {
     const state = feedSlice(initialState, getFeed.fulfilled(mockOrderData, ''));
     expect(state.statys).toBe(RequestStatus.Success);
