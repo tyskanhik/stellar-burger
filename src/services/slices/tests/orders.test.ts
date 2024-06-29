@@ -14,7 +14,7 @@ const mockOrders: TOrder[] = [
 ];
 
 describe('slice orders', () => {
-  it('Статус pending', async () => {
+  it('Статус pending', () => {
     const state = ordersSlice(initialState, getOrdes.pending(''));
     expect(state.requestStatus).toBe(RequestStatus.Loading);
   });
