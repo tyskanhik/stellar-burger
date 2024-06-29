@@ -29,4 +29,12 @@ describe('Тест slice feed', () => {
     expect(state.total).toBe(mockOrderData.total);
     expect(state.totalToday).toBe(mockOrderData.totalToday);
   });
+
+  it('Статус Failed', () => {
+    const state = feedSlice(
+      initialState,
+      getFeed.rejected(new Error('Network error'), '')
+    );
+    expect(state.statys).toBe(RequestStatus.Failed);
+  });
 });
