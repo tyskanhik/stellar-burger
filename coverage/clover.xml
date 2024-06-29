@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1719642061691" clover="3.2.0">
-  <project timestamp="1719642061691" name="All files">
+<coverage generated="1719644329860" clover="3.2.0">
+  <project timestamp="1719644329860" name="All files">
     <metrics statements="71" coveredstatements="61" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="4" elements="83" coveredelements="70" complexity="0" loc="71" ncloc="71" packages="1" files="1" classes="1"/>
     <file name="burgerConstructor.ts" path="E:\Fox\practicum\stellar-burger\src\services\slices\burgerConstructor.ts">
       <metrics statements="71" coveredstatements="61" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="4"/>
