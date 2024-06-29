@@ -11,13 +11,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus, TUser } from '@utils-types';
 import { deleteCookie, setCookie } from '../../utils/cookie';
 
-interface UserState {
+export interface UserState {
   iaAuthCheck: boolean;
   data: TUser | null;
   requestStatus: RequestStatus;
 }
 
-const initialState: UserState = {
+export const initialState: UserState = {
   iaAuthCheck: false,
   data: null,
   requestStatus: RequestStatus.Idle
