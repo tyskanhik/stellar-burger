@@ -1,6 +1,5 @@
 import { RequestStatus, TIngredient } from '@utils-types';
 import ingredientSlice, { initialState, getIngredients } from '../ingredients';
-import { configureStore } from '@reduxjs/toolkit';
 
 const mockIngredients: TIngredient[] = [
   {
@@ -63,12 +62,13 @@ describe('slice ingredients', () => {
     expect(state.status).toBe(RequestStatus.Loading);
   });
 
-  it('Статус Success', () => {
+  it('Статус Success и запись ингредиентов в state', () => {
     const state = ingredientSlice(
       initialState,
       getIngredients.fulfilled(mockIngredients, '')
     );
     expect(state.status).toBe(RequestStatus.Success);
+    expect(state.data).toEqual(mockIngredients);
   });
 
   it('Статус Failed', () => {
