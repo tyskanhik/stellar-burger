@@ -1,3 +1,5 @@
+import token from '../fixtures/user.json';
+
 beforeEach(() => {
   cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
   cy.visit('http://localhost:4000');
@@ -50,5 +52,35 @@ describe('проверка модального окна', () => {
     cy.get(`[data-cy=ingredient_2]`).click();
     cy.get('body').click(0, 0);
     cy.get(`[data-cy=modal]`).should('not.exist');
+  });
+});
+
+describe('проверка оформления заказа', () => {
+  beforeEach(() => {
+    cy.intercept('GET', 'api/auth/user', {
+      fixture: 'user.json'
+    });
+    localStorage.setItem('refreshToken', token.refreshToken);
+    cy.setCookie('accessToken', token.accessToken);
+    cy.intercept('POST', 'api/orders', { fixture: 'order.json' });
+  });
+
+  after(() => {
+    localStorage.clear();
+    cy.clearCookie('accessToken');
+  });
+
+  it('проверка отправки заказа', () => {
+    cy.get(`[data-cy=ingredient_1]`).contains('Добавить').click();
+    cy.get(`[data-cy=ingredient_2]`).contains('Добавить').click();
+    cy.get(`[data-cy=ingredient_3]`).contains('Добавить').click();
+
+    cy.get(`[data-cy=checkout]`).contains('Оформить заказ').click();
+    cy.get(`[data-cy=modal]`).should('be.visible');
+    cy.get(`[data-cy=modal]`).contains('1111');
+    cy.get('body').click(0, 0);
+    cy.get(`[data-cy=modal]`).should('not.exist');
+    cy.get(`[data-cy=construcror]`).contains('ul').should('have.length', 0);
+    cy.get(`[data-cy=construcror]`).contains('Выберите булки');
   });
 });
