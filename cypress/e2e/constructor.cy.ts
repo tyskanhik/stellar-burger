@@ -27,3 +27,28 @@ describe('проверка конструктора', () => {
     cy.get(`[data-cy=construcror]`).contains('Соус');
   });
 });
+
+describe('проверка модального окна', () => {
+  it('проверка открытия модального окна', () => {
+    cy.get(`[data-cy=modal]`).should('not.exist');
+    cy.get(`[data-cy=ingredient_2]`).click();
+    cy.get(`[data-cy=modal]`).should('be.visible');
+  });
+
+  it('проверка что в модальном окне корректные данные', () => {
+    cy.get(`[data-cy=ingredient_2]`).click();
+    cy.get(`[data-cy=modal]`).contains('Ингредиент_1');
+  });
+
+  it('проверка закрытия модального окна по крестику', () => {
+    cy.get(`[data-cy=ingredient_2]`).click();
+    cy.get(`[data-cy=modal-close]`).click();
+    cy.get(`[data-cy=modal]`).should('not.exist');
+  });
+
+  it('проверка закрытия модального окна по оверлею', () => {
+    cy.get(`[data-cy=ingredient_2]`).click();
+    cy.get('body').click(0, 0);
+    cy.get(`[data-cy=modal]`).should('not.exist');
+  });
+});
