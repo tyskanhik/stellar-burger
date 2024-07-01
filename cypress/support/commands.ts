@@ -35,3 +35,11 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add('search', (getName, containsName) => {
+  cy.get(getName).contains(containsName);
+});
+
+Cypress.Commands.add('modal', (parameter) => {
+  cy.get(`[data-cy=modal]`).should(parameter);
+});
