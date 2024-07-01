@@ -2,12 +2,12 @@ import { getIngredientsApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus, TIngredient } from '@utils-types';
 
-type IngredientState = {
+export type IngredientState = {
   data: TIngredient[];
   status: RequestStatus;
 };
 
-const initialState: IngredientState = {
+export const initialState: IngredientState = {
   data: [],
   status: RequestStatus.Idle
 };

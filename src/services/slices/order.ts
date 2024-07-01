@@ -2,13 +2,13 @@ import { getOrderByNumberApi, orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus, TOrder } from '@utils-types';
 
-interface OrderState {
+export interface OrderState {
   orderInfo: TOrder | null;
   order: TOrder | null;
   requestStatus: RequestStatus;
 }
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
   orderInfo: null,
   order: null,
   requestStatus: RequestStatus.Idle
